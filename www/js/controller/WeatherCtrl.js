@@ -21,12 +21,9 @@ app.controller('WeatherCtrl', ['$scope','$http','GeolocationService', function (
   $scope.geolocate = function(){
 
       GeolocationService.getCurrentPosition(function(position){
-                    $scope.loader= true;
-
-        $http.get("http://api.openweathermap.org/data/2.5/forecast/daily?lat=" 
-        + position.coords.latitude +"&lon=" 
-        + position.coords.longitude 
-        +"&mode=json$units=metric&cnt=10").success(httpSuccess).error(httpError)
+              $scope.loader= true;
+                      
+              $http.get("http://api.openweathermap.org/data/2.5/forecast/daily?lat="+ Math.trunc(position.coords.latitude*100)/100 +"&lon="+ Math.trunc(position.coords.longitude*100)/100 +"&mode=json&units=metric&cnt=10").success(httpSuccess).error(httpError)
       },function(){
         alert('Impossible de récupérer votre position');
 
